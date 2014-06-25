@@ -1,2 +1,2 @@
-ldap-client
+ldap-client project
 ===========

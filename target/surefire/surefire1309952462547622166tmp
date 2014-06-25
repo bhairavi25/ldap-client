@@ -1,5 +1,0 @@
-#surefire
-#Wed Jun 25 10:42:13 EDT 2014
-user.dir=/home/adminuser/ldap_client/LDAP
-localRepository=/home/adminuser/.m2/repository
-basedir=/home/adminuser/ldap_client/LDAP

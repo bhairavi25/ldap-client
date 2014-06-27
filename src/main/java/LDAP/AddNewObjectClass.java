@@ -14,6 +14,7 @@ public class AddNewObjectClass {
 
 	public static void main(String[] args) {
 		
+	
 		 Hashtable env = new Hashtable();
 	     env.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory");
 	     env.put(Context.PROVIDER_URL, args[0]);
@@ -21,25 +22,30 @@ public class AddNewObjectClass {
 	     env.put(Context.SECURITY_PRINCIPAL, args[1]);
 	     env.put(Context.SECURITY_CREDENTIALS, args[2]);
 		try {
-		 
+		 String[] str = new String[2];
+		 Attribute att= new BasicAttribute("objectclass");
+		 att.add("dc=mms,dc=com");
+		 att.add("ou=brooklyn");
+		 att.add("cn=Tim");
+		 //att.add("cust");
 		 DirContext	ctx = new InitialDirContext( env );
 	     // Specify attributes for the schema object
 	     Attributes attrs = new BasicAttributes(true); // Ignore case
-	     attrs.put("NUMERICOID", "2.5.6.5.1.1.1.1");
-	     attrs.put("NAME", "newClass");
-	     attrs.put("DESC", "for JNDITutorial example only");
-	     attrs.put("SUP", "top");
-	     attrs.put("STRUCTURAL", "true");
-	     Attribute must = new BasicAttribute("MUST", "ck");
-	     must.add("objectclass");
-	     attrs.put(must);
-
-	     // Get the schema tree root
-	     DirContext schema = ctx.getSchema("");
+	     //attrs.put("NUMERICOID", "2.5.6.5.1.1");
+	     attrs.put(att);
+	     //attrs.put("givenname", "jack");
+	     //For OrganizationalUnit/ou
+	     //attrs.put("objectClass", "organizationalUnit");
+	     //For Users/cn objectClass should be
+	     attrs.put("objectClass", "inetOrgPerson");
+	     //For Users/cn add this extra attributes
+	     attrs.put("cn", "Tim");
+	     attrs.put("sn","Tim");
 
 	     // Add the new schema object for "fooObjectClass"
-	     DirContext newClass = schema.createSubcontext("ClassDefinition/newClass", attrs);
-		}
+	     DirContext newClass = ctx.createSubcontext("cn=Tim,ou=brooklyn,dc=mms,dc=com", attrs);
+	     //ctx.createSubcontext("ldap://108.168.183.180/"+"cn=admin,dc=mms,dc=com", attrs);
+	         }
 	     catch(Exception ex){
 	    	 ex.printStackTrace();
 	     }
